@@ -337,10 +337,11 @@ def rule_engine_unified(yolo_results, frame, helmet_model, seatbelt_model,
     return violations
 
 # ─── 3. LOAD MODELS ───
-YOLO_PATH = r"C:\Users\akshi\Downloads\best.pt"
-HELMET_CKPT = r"C:\Users\akshi\Downloads\grid\demo_app\best_helmet_efficientnet_b3.pt"
-SEATBELT_CKPT = r"C:\Users\akshi\Downloads\grid\demo_app\best_seatbelt_mobilenetv3_large.pt"
-TRIPLE_RIDING_PKL = r"C:\Users\akshi\Downloads\triple_riding_learned_classifier.pkl"
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+YOLO_PATH = os.path.join(_BASE_DIR, "best.pt")
+HELMET_CKPT = os.path.join(_BASE_DIR, "best_helmet_efficientnet_b3.pt")
+SEATBELT_CKPT = os.path.join(_BASE_DIR, "best_seatbelt_mobilenetv3_large.pt")
+TRIPLE_RIDING_PKL = os.path.join(_BASE_DIR, "triple_riding_learned_classifier.pkl")
 
 detector = None
 helmet_model = None
@@ -372,31 +373,40 @@ def load_models_lazy():
             from ultralytics import YOLO
             if os.path.exists(YOLO_PATH):
                 detector = YOLO(YOLO_PATH)
+                print("✅ Loaded custom YOLO detector (best.pt)")
             else:
                 detector = YOLO("yolov8n.pt")
-                print("⚠️ Using default coco yolov8n.pt")
+                print("⚠️ Custom best.pt not found. Using default YOLOv8n (COCO) as fallback.")
         except Exception as e:
-            print(f"Error loading YOLO: {e}")
-            
+            print(f"❌ Error loading YOLO detector: {e}")
+
     if helmet_model is None:
         try:
             helmet_model = build_efficientnet_b3(len(HELMET_CLASSES))
             if os.path.exists(HELMET_CKPT):
-                helmet_model.load_state_dict(torch.load(HELMET_CKPT, map_location=DEVICE))
+                helmet_model.load_state_dict(torch.load(HELMET_CKPT, map_location=DEVICE, weights_only=True))
+                print("✅ Loaded custom Helmet EfficientNet-B3 weights.")
+            else:
+                print("⚠️ Helmet checkpoint not found — model will use random weights (predictions unreliable).")
             helmet_model.to(DEVICE)
             helmet_model.eval()
         except Exception as e:
-            print(f"Error loading Helmet model: {e}")
-            
+            print(f"❌ Error loading Helmet model: {e}")
+            helmet_model = None
+
     if seatbelt_model is None:
         try:
             seatbelt_model = build_mobilenet_large(len(SEATBELT_CLASSES))
             if os.path.exists(SEATBELT_CKPT):
-                seatbelt_model.load_state_dict(torch.load(SEATBELT_CKPT, map_location=DEVICE))
+                seatbelt_model.load_state_dict(torch.load(SEATBELT_CKPT, map_location=DEVICE, weights_only=True))
+                print("✅ Loaded custom Seatbelt MobileNetV3-Large weights.")
+            else:
+                print("⚠️ Seatbelt checkpoint not found — model will use random weights (predictions unreliable).")
             seatbelt_model.to(DEVICE)
             seatbelt_model.eval()
         except Exception as e:
-            print(f"Error loading Seatbelt model: {e}")
+            print(f"❌ Error loading Seatbelt model: {e}")
+            seatbelt_model = None
 
 # ─── 4. GRADIO INFERENCE PIPELINE FUNCTION ───
 def process_image(input_image, use_clahe, helmet_conf, seatbelt_conf, triple_riding_conf, overlap_thresh, moto_expand):
@@ -412,6 +422,9 @@ def process_image(input_image, use_clahe, helmet_conf, seatbelt_conf, triple_rid
         frame_bgr = apply_clahe_bgr(frame_bgr)
         frame = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
     
+    if detector is None:
+        return None, "❌ YOLO detector failed to load. Please check the container logs."
+
     try:
         results = detector.predict(source=frame_bgr, conf=0.20, imgsz=1024, augment=True, verbose=False, device=DEVICE, agnostic_nms=True)
     except Exception as e:
