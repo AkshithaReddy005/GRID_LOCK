@@ -5,3 +5,4 @@ gradio
 opencv-python-headless
 pillow
 numpy
+huggingface_hub<0.26.0
