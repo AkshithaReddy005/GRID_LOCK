@@ -665,7 +665,7 @@ with gr.Blocks(css=css) as demo:
                         
                     submit_btn = gr.Button("⚡ Analyze Traffic Frame", variant="primary")
                     
-                with gr.Column(scale=1.2):
+                with gr.Column(scale=1):
                     output_img = gr.Image(type="numpy", label="👁️ AI Annotated Output")
                     output_html = gr.HTML(label="📋 Violation Report Summary")
 
