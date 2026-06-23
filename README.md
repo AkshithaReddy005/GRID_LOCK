@@ -1,3 +1,14 @@
+---
+title: Gridlock Traffic AI
+emoji: 🚦
+colorFrom: blue
+colorTo: red
+sdk: gradio
+sdk_version: "4.19.0"
+app_file: app.py
+pinned: false
+---
+
 # 🚦 GRIDLOCK 2.0: Automated Traffic Violation Detection Pipeline
 
 <div align="center">
