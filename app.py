@@ -663,44 +663,63 @@ with gr.Blocks(css=css) as demo:
                 arch_b64 = base64.b64encode(f2.read()).decode('utf-8')
 
             home_html = f"""
-            <div style="width: 100%; padding: 0; box-sizing: border-box;">
-              <!-- Background Image Hero Section -->
-              <div style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url('data:image/jpeg;base64,{bg_b64}'); background-size: cover; background-position: center; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; padding: 40px 20px; box-sizing: border-box;">
-                <div style="text-align: center; margin-bottom: 3rem; width: 100%;">
-                  <h1 style="color: #FBBF24; font-size: 6em; margin-bottom: 0px; text-shadow: 4px 4px 8px rgba(0,0,0,0.8);">GRIDLOCK</h1>
-                  <p style="color: #FFFFFF; font-size: 1.5em; margin-top: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Automated Traffic Violation Detection</p>
-                </div>
-                
-                <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-                    <!-- Team Details -->
-                    <div style="background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(10px); padding: 2rem; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; max-width: 600px;">
-                      <h2 style="color: #FBBF24; text-align: center; margin-bottom: 1rem; font-size: 2em;">Team Elite Hackers</h2>
-                      <ul style="list-style-type: none; padding: 0; text-align: center;">
-                        <li style="color: #FFFFFF; font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">Akshitha Reddy</li>
-                        <li style="color: #FFFFFF; font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">Shreya</li>
-                        <li style="color: #FFFFFF; font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">Pradeep</li>
-                        <li style="color: #FFFFFF; font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">Sandeep</li>
-                      </ul>
-                      <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
-                      <p style="color: #8b949e; text-align: center; margin-top: 1rem; font-size: 1.2em; text-transform: uppercase;">Vasavi College of Engineering</p>
-                    </div>
-                </div>
-              </div>
-              
-              <!-- Architecture Section (Outside Background) -->
-              <div style="display: flex; justify-content: center; align-items: center; width: 100%; padding: 40px 20px; box-sizing: border-box; background-color: transparent;">
-                  <!-- Architecture Details -->
-                  <div style="background: rgba(13, 17, 23, 0.85); padding: 2rem; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; max-width: 1200px;">
-                    <details style="cursor: pointer;">
-                        <summary style="color: #FBBF24; font-size: 1.8em; font-weight: bold; text-align: center; list-style: none; outline: none;">
-                            📐 Click to View Pipeline Architecture
-                        </summary>
-                        <div style="margin-top: 20px; text-align: center;">
-                            <img src="data:image/jpeg;base64,{arch_b64}" alt="Architecture Diagram" style="max-width: 100%; border-radius: 10px; border: 2px solid #FBBF24; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-                        </div>
-                    </details>
+            <div style="width:100%; box-sizing:border-box; background:#0d1117;">
+
+              <!-- ── HERO ── fixed height so it never resizes on scroll -->
+              <div style="
+                  position: relative;
+                  height: 620px;
+                  width: 100%;
+                  overflow: hidden;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+              ">
+                <!-- background image layer -->
+                <div style="
+                    position: absolute; inset: 0;
+                    background: url('data:image/jpeg;base64,{bg_b64}') center/cover no-repeat;
+                    filter: brightness(0.45);
+                    z-index: 0;
+                "></div>
+
+                <!-- content layer -->
+                <div style="position: relative; z-index: 1; text-align: center; width: 100%; padding: 0 20px; box-sizing: border-box;">
+                  <h1 style="color:#FBBF24; font-size:5.5em; margin:0 0 8px 0; font-family:'Inter',sans-serif; font-weight:900; text-shadow:3px 3px 10px rgba(0,0,0,0.9); letter-spacing:4px;">
+                    GRIDLOCK
+                  </h1>
+                  <p style="color:#ffffff; font-size:1.4em; margin:0 0 40px 0; text-shadow:1px 1px 4px rgba(0,0,0,0.8);">
+                    Automated Traffic Violation Detection
+                  </p>
+
+                  <!-- Team card -->
+                  <div style="display:inline-block; background:rgba(13,17,23,0.88); backdrop-filter:blur(12px); padding:28px 48px; border-radius:16px; border:1px solid rgba(251,191,36,0.3); min-width:320px;">
+                    <h2 style="color:#FBBF24; margin:0 0 16px 0; font-size:1.6em; font-family:'Inter',sans-serif;">Team Elite Hackers</h2>
+                    <p style="color:#fff; font-size:1.15em; font-weight:600; margin:6px 0;">Akshitha Reddy</p>
+                    <p style="color:#fff; font-size:1.15em; font-weight:600; margin:6px 0;">Shreya</p>
+                    <p style="color:#fff; font-size:1.15em; font-weight:600; margin:6px 0;">Pradeep</p>
+                    <p style="color:#fff; font-size:1.15em; font-weight:600; margin:6px 0;">Sandeep</p>
+                    <hr style="border:none; border-top:1px solid rgba(255,255,255,0.15); margin:16px 0;">
+                    <p style="color:#8b949e; margin:0; font-size:0.95em; text-transform:uppercase; letter-spacing:1px;">Vasavi College of Engineering</p>
                   </div>
+                </div>
               </div>
+
+              <!-- ── ARCHITECTURE (always visible, no toggle) ── -->
+              <div style="width:100%; padding:40px 20px; box-sizing:border-box; background:#0d1117;">
+                <div style="max-width:1200px; margin:0 auto; background:rgba(22,27,34,0.95); border-radius:16px; border:1px solid rgba(251,191,36,0.25); padding:32px;">
+                  <h2 style="color:#FBBF24; text-align:center; font-family:'Inter',sans-serif; font-size:1.6em; margin:0 0 24px 0; letter-spacing:1px;">
+                    📐 Pipeline Architecture
+                  </h2>
+                  <div style="text-align:center;">
+                    <img src="data:image/jpeg;base64,{arch_b64}"
+                         alt="GRIDLOCK Pipeline Architecture Diagram"
+                         style="max-width:100%; border-radius:10px; border:2px solid rgba(251,191,36,0.5); box-shadow:0 4px 24px rgba(0,0,0,0.6);">
+                  </div>
+                </div>
+              </div>
+
             </div>
             """
             gr.HTML(home_html)
