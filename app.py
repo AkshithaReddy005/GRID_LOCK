@@ -681,4 +681,4 @@ with gr.Blocks(css=css) as demo:
                 label="Select a Sample Image"
             )
 
-demo.queue().launch(share=True)
+demo.queue().launch()
