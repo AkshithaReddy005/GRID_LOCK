@@ -591,7 +591,7 @@ h1 { text-align: center; font-family: 'Inter', sans-serif; font-weight: 800; mar
 .progress-level { display: none !important; }
 """
 
-with gr.Blocks() as demo:
+with gr.Blocks(css=css) as demo:
     with gr.Tabs():
         with gr.Tab("🏠 Home"):
             import base64
@@ -681,4 +681,4 @@ with gr.Blocks() as demo:
                 label="Select a Sample Image"
             )
 
-demo.queue().launch(share=True, css=css)
+demo.queue().launch(share=True)
