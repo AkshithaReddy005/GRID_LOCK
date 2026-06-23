@@ -2,8 +2,10 @@ ultralytics
 torch
 torchvision
 gradio==4.38.1
+gradio_client==1.2.0
 opencv-python-headless
 pillow
 numpy
 huggingface_hub<0.26.0
 joblib
+pydantic==2.9.2
