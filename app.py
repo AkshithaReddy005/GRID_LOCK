@@ -681,4 +681,4 @@ with gr.Blocks(css=css) as demo:
                 label="Select a Sample Image"
             )
 
-demo.queue().launch()
+demo.queue().launch(server_name="0.0.0.0", server_port=7860)
