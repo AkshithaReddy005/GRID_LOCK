@@ -597,6 +597,49 @@ body { background-color: #0d1117; color: #c9d1d9; margin: 0 !important; padding:
 h1 { text-align: center; font-family: 'Inter', sans-serif; font-weight: 800; margin-bottom: 5px; }
 .desc { text-align: center; font-size: 1.1em; color: #8b949e; margin-bottom: 25px; }
 
+/* ─── TAB BAR STYLING ─── */
+.tabs { border: none !important; }
+
+/* The tab button strip background */
+.tab-nav {
+    background: #161b22 !important;
+    border-bottom: 2px solid #30363d !important;
+    padding: 0 16px !important;
+    display: flex !important;
+    gap: 4px !important;
+}
+
+/* Individual tab buttons */
+.tab-nav button {
+    background: transparent !important;
+    color: #8b949e !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
+    border-radius: 0 !important;
+    padding: 14px 24px !important;
+    font-size: 1.05em !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', sans-serif !important;
+    cursor: pointer !important;
+    transition: color 0.2s ease, border-color 0.2s ease !important;
+    letter-spacing: 0.3px !important;
+}
+
+/* Hover state */
+.tab-nav button:hover {
+    color: #e6edf3 !important;
+    border-bottom: 3px solid #FBBF24 !important;
+    background: rgba(251, 191, 36, 0.06) !important;
+}
+
+/* Active / selected tab */
+.tab-nav button.selected {
+    color: #FBBF24 !important;
+    border-bottom: 3px solid #FBBF24 !important;
+    background: rgba(251, 191, 36, 0.08) !important;
+    box-shadow: 0 2px 12px rgba(251, 191, 36, 0.15) !important;
+}
+
 /* Hide Gradio Progress and Queue text */
 .progress-text { display: none !important; }
 .meta-text { display: none !important; }
