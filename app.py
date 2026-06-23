@@ -591,9 +591,13 @@ def process_image(input_image, use_clahe, helmet_conf, seatbelt_conf, triple_rid
 # ─── 5. THE GRAPHICAL INTERFACE (GRADIO) ───
 css = """
 body { background-color: #0d1117; color: #c9d1d9; margin: 0 !important; padding: 0 !important; }
-.gradio-container { max-width: 100vw !important; margin: 0 !important; padding: 0 !important; width: 100vw !important; overflow-x: hidden; border: none !important; }
-.contain { padding: 0 !important; margin: 0 !important; max-width: 100vw !important; }
-.wrap { padding: 0 !important; margin: 0 !important; max-width: 100vw !important; }
+/* NOTE: do NOT set overflow-x:hidden here — it also blocks vertical scroll in Chrome/Safari */
+.gradio-container { max-width: 100vw !important; margin: 0 !important; padding: 0 !important; width: 100vw !important; overflow: visible !important; border: none !important; }
+.contain { padding: 0 !important; margin: 0 !important; max-width: 100vw !important; overflow: visible !important; }
+.wrap { padding: 0 !important; margin: 0 !important; max-width: 100vw !important; overflow: visible !important; }
+/* Ensure tab content panels are fully scrollable */
+.tabitem { overflow: visible !important; height: auto !important; }
+.tab-content { overflow: visible !important; height: auto !important; }
 h1 { text-align: center; font-family: 'Inter', sans-serif; font-weight: 800; margin-bottom: 5px; }
 .desc { text-align: center; font-size: 1.1em; color: #8b949e; margin-bottom: 25px; }
 
@@ -659,7 +663,7 @@ with gr.Blocks(css=css) as demo:
                 arch_b64 = base64.b64encode(f2.read()).decode('utf-8')
 
             home_html = f"""
-            <div style="width: 100vw; margin: -20px; padding: 0; box-sizing: border-box; overflow-x: hidden;">
+            <div style="width: 100%; padding: 0; box-sizing: border-box;">
               <!-- Background Image Hero Section -->
               <div style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url('data:image/jpeg;base64,{bg_b64}'); background-size: cover; background-position: center; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; padding: 40px 20px; box-sizing: border-box;">
                 <div style="text-align: center; margin-bottom: 3rem; width: 100%;">
